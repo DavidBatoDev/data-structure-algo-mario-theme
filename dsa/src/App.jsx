@@ -15,8 +15,8 @@ function App() {
     <Router>
       <Navbar />
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path='/selection' element={<Selection />} />
+          <Route path="/" element={<TicTacToe />} />
+          <Route path='/selection' element={<TicTacToe />} />
           <Route path="/case1" element={<TicTacToe />} />
           <Route path="/case2" element={<Stack />} />
           <Route path="/case3" element={<Queue />} />
