@@ -1,0 +1,20 @@
+/* src/components/DirtNode.css */
+.dirt-node {
+    background-image: url('/images/dirt.png'); /* Path to your dirt image */
+    background-size: cover;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .node-content {
+    color: white; /* Adjust text color for visibility */
+    font-weight: bold;
+    z-index: 1; /* Ensure text is above the background */
+    font: 'minecraftRegular';
+  }
+  

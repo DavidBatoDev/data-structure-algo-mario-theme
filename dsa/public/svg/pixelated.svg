@@ -1,0 +1,9 @@
+<defs>
+  <filter id="pixelate">
+    <feComponentTransfer>
+      <feFuncR type="discrete" tableValues="0 1" />
+      <feFuncG type="discrete" tableValues="0 1" />
+      <feFuncB type="discrete" tableValues="0 1" />
+    </feComponentTransfer>
+  </filter>
+</defs>

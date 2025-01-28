@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'MinecraftRegular';
+  src: url('/fonts/MinecraftRegular-Bmg3.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MinecraftItalic';
+  src: url('/fonts/MinecraftItalic-R8Mo.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'MinecraftBold';
+  src: url('/fonts/MinecraftBold-nMK1.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MinecraftBoldItalic';
+  src: url('/fonts/MinecraftBoldItalic-1y1e.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+
+body {
+  font-family: '', sans-serif;
+  background-color: #2e2e2e;
+}
+  h1 {
+    font-family: 'Calistoga', sans-serif;
+  }
+
+
+  .text-stroke {
+    -webkit-text-stroke-width: 1px; /* Change stroke thickness */
+    -webkit-text-stroke-color: #000000; /* Change stroke color */
+  }
+
+  .pixel-corners,
+  .pixel-corners--wrapper {
+    clip-path: polygon(0px calc(100% - 12px),
+      3px calc(100% - 12px),
+      3px calc(100% - 6px),
+      6px calc(100% - 6px),
+      6px calc(100% - 3px),
+      12px calc(100% - 3px),
+      12px 100%,
+      calc(100% - 12px) 100%,
+      calc(100% - 12px) calc(100% - 3px),
+      calc(100% - 6px) calc(100% - 3px),
+      calc(100% - 6px) calc(100% - 6px),
+      calc(100% - 3px) calc(100% - 6px),
+      calc(100% - 3px) calc(100% - 12px),
+      100% calc(100% - 12px),
+      100% 12px,
+      calc(100% - 3px) 12px,
+      calc(100% - 3px) 6px,
+      calc(100% - 6px) 6px,
+      calc(100% - 6px) 3px,
+      calc(100% - 12px) 3px,
+      calc(100% - 12px) 0px,
+      12px 0px,
+      12px 3px,
+      6px 3px,
+      6px 6px,
+      3px 6px,
+      3px 12px,
+      0px 12px);
+    position: relative;
+  }
+  .pixel-corners {
+    border: 3px solid transparent;
+  }
+  .pixel-corners--wrapper {
+    width: fit-content;
+    height: fit-content;
+  }
+  .pixel-corners--wrapper .pixel-corners {
+    display: block;
+    clip-path: polygon(3px 12px,
+      6px 12px,
+      6px 6px,
+      12px 6px,
+      12px 3px,
+      calc(100% - 12px) 3px,
+      calc(100% - 12px) 6px,
+      calc(100% - 6px) 6px,
+      calc(100% - 6px) 12px,
+      calc(100% - 3px) 12px,
+      calc(100% - 3px) calc(100% - 12px),
+      calc(100% - 6px) calc(100% - 12px),
+      calc(100% - 6px) calc(100% - 6px),
+      calc(100% - 12px) calc(100% - 6px),
+      calc(100% - 12px) calc(100% - 3px),
+      12px calc(100% - 3px),
+      12px calc(100% - 6px),
+      6px calc(100% - 6px),
+      6px calc(100% - 12px),
+      3px calc(100% - 12px));
+  }
+  .pixel-corners::after,
+  .pixel-corners--wrapper::after {
+    content: "";
+    position: absolute;
+    clip-path: polygon(0px calc(100% - 12px),
+      3px calc(100% - 12px),
+      3px calc(100% - 6px),
+      6px calc(100% - 6px),
+      6px calc(100% - 3px),
+      12px calc(100% - 3px),
+      12px 100%,
+      calc(100% - 12px) 100%,
+      calc(100% - 12px) calc(100% - 3px),
+      calc(100% - 6px) calc(100% - 3px),
+      calc(100% - 6px) calc(100% - 6px),
+      calc(100% - 3px) calc(100% - 6px),
+      calc(100% - 3px) calc(100% - 12px),
+      100% calc(100% - 12px),
+      100% 12px,
+      calc(100% - 3px) 12px,
+      calc(100% - 3px) 6px,
+      calc(100% - 6px) 6px,
+      calc(100% - 6px) 3px,
+      calc(100% - 12px) 3px,
+      calc(100% - 12px) 0px,
+      12px 0px,
+      12px 3px,
+      6px 3px,
+      6px 6px,
+      3px 6px,
+      3px 12px,
+      0px 12px,
+      0px 50%,
+      3px 50%,
+      3px 12px,
+      6px 12px,
+      6px 6px,
+      12px 6px,
+      12px 3px,
+      calc(100% - 12px) 3px,
+      calc(100% - 12px) 6px,
+      calc(100% - 6px) 6px,
+      calc(100% - 6px) 12px,
+      calc(100% - 3px) 12px,
+      calc(100% - 3px) calc(100% - 12px),
+      calc(100% - 6px) calc(100% - 12px),
+      calc(100% - 6px) calc(100% - 6px),
+      calc(100% - 12px) calc(100% - 6px),
+      calc(100% - 12px) calc(100% - 3px),
+      12px calc(100% - 3px),
+      12px calc(100% - 6px),
+      6px calc(100% - 6px),
+      6px calc(100% - 12px),
+      3px calc(100% - 12px),
+      3px 50%,
+      0px 50%);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000000;
+    display: block;
+    pointer-events: none;
+  }
+  .pixel-corners::after {
+    margin: -3px;
+  }
+
+
+  /* pixel for edges */
+  .pixel-corners-edge {
+    clip-path: polygon(
+      0px calc(100% - 38px),
+      19px calc(100% - 38px),
+      19px calc(100% - 19px),
+      38px calc(100% - 19px),
+      38px 100%,
+      calc(100% - 38px) 100%,
+      calc(100% - 38px) calc(100% - 19px),
+      calc(100% - 19px) calc(100% - 19px),
+      calc(100% - 19px) calc(100% - 38px),
+      100% calc(100% - 38px),
+      100% 38px,
+      calc(100% - 19px) 38px,
+      calc(100% - 19px) 19px,
+      calc(100% - 38px) 19px,
+      calc(100% - 38px) 0px,
+      38px 0px,
+      38px 19px,
+      19px 19px,
+      19px 38px,
+      0px 38px
+    );
+  }

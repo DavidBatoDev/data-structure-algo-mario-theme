@@ -1,0 +1,48 @@
+{
+  "name": "dsa",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "carousel": "^0.0.3",
+    "clsx": "^2.1.1",
+    "dagre": "^0.8.5",
+    "framer-motion": "^11.15.0",
+    "motion": "^11.15.0",
+    "react": "^18.3.1",
+    "react-confetti": "^6.1.0",
+    "react-d3-tree": "^3.6.2",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.4.0",
+    "react-modal": "^3.16.3",
+    "react-router-dom": "^7.0.2",
+    "react-toastify": "^11.0.2",
+    "react-tree-graph": "^8.0.2",
+    "react-zoom-pan-pinch": "^3.6.1",
+    "reactflow": "^11.11.4",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.12.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "vite": "^6.0.1"
+  }
+}
