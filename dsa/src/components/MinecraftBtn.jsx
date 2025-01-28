@@ -10,10 +10,10 @@ const MinecraftBtn = ({ children, onClick, className }) => {
   const handleClick = (e) => {
     // Play the sound
     clickSound.currentTime = 0;  // reset playback in case clicked repeatedly
-    clickSound.play().catch((err) => {
-      // If user hasn't interacted with the page yet, this may fail on some browsers
-      console.log("Audio play failed:", err);
-    });
+    // clickSound.play().catch((err) => {
+    //   // If user hasn't interacted with the page yet, this may fail on some browsers
+    //   console.log("Audio play failed:", err);
+    // });
 
     // Then call the parent's onClick if provided
     if (onClick) {
