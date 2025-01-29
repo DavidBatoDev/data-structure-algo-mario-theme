@@ -139,7 +139,7 @@ const Queue = () => {
               value={plateNumber}
               onChange={(e) => setPlateNumber(e.target.value)}
               placeholder="Enter Plate Number"
-              className="p-2 bg-red-600 pixel-corners rounded border border-black text-black border-dark bg-transparent w-full md:w-auto"
+              className="p-2 bg-red-500 pixel-corners rounded border border-black text-white border-dark bg-transparent w-full md:w-auto"
             />
             <CustomButton
               variant="departLastCar"
