@@ -7,7 +7,7 @@ const CustomButton = ({ variant = "default", children, icon: Icon, onClick, clas
     <button
       onClick={onClick}
       className={clsx(
-        "flex items-center justify-center gap-2 px-6 py-2 rounded-lg text-lg shadow-md transition-all duration-150",
+        "pixel-corners flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-lg shadow-md transition-all duration-150", // Ensure full width or auto for small screens
         // Background variants
         {
           "bg-green-500 text-white hover:bg-green-600 active:bg-green-700 shadow-[0_4px_0_#1a1a1a]": variant === "arrival",

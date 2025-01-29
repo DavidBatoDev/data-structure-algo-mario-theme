@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiMenu } from 'react-icons/fi';
 import { path } from 'framer-motion/client';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -28,7 +30,7 @@ const Navbar = () => {
         <div className="fixed top-4 left-4 z-50">
           <button
             onClick={toggleDrawer}
-            className="p-2 bg-primary text-dark rounded-full shadow-md hover:bg-primary-light transition"
+            className="bg-yellow-600 pixel-corners text-white p-2 bg-primary text-dark rounded-full shadow-md hover:bg-primary-light transition"
           >
             <FiMenu size={24} />
           </button>
@@ -46,9 +48,9 @@ const Navbar = () => {
         // transition={{ type: 'tween', duration: 0.2, }}
         // transition={{ type: 'spring', stiffness: 70 }}
         // transition={{ type: 'keyframes', duration: 0.7, ease: 'easeInOut' }}
-        className="bg-[#D9D9D9] border-black border-r-4 shadow-craftingInset text-black fixed top-0 left-0 h-full w-64 z-50"
+        className="bg-[#D9D9D9] border-black border-r-4 shadow-craftingInset text-black fixed top-0 left-0 h-full w-72 z-50"
       >
-        <h2 className="text-2xl font-bold text-gray-800 p-6">Navigation</h2>
+        <h2 onClick={() => navigate('/')} className="cursor-pointer text-2xl font-bold text-gray-800 p-6">Homepage</h2>
         <ul className="display flex flex-col">
           {navLinks.map((link) => (
             <li key={link.path} className='hover:bg-slate-300 p-3'>

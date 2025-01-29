@@ -131,6 +131,18 @@ const BinarySearchTree = () => {
     document.title = "BST with Traversal";
   }, []);
 
+    useEffect(() => {
+      const audio = new Audio('/audio/mario.mp3');
+      audio.volume = 0.7
+      audio.loop = true; 
+      audio.play();
+  
+      return () => {
+        audio.pause();
+      };
+    }, []);
+  
+
   // Clear any traversal highlight
   const clearTraversal = () => {
     if (traversalIntervalRef.current) {
@@ -197,7 +209,7 @@ const BinarySearchTree = () => {
         position: { x: 0, y: 0 }, 
         // type: "dirt",
         style: {
-          background: "transparent",
+          background: "yellow",
           color: "black",
           border: "2px solid black",
           height: 60,
@@ -355,7 +367,7 @@ const BinarySearchTree = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-white"
+      className="min-h-screen flex flex-col items-center justify-center bg-[url('/images/4-bg.jpg')] bg-contain py-3 px-4 text-black relative"
     >
       <div 
       style={{
@@ -364,14 +376,14 @@ const BinarySearchTree = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
-      className="w-full h-screen flex gap-8 py-[70px] px-[70px]">
+      className="w-full h-screen flex gap-8 py-[30px] px-[30px]">
         {/* LEFT: input form */}
 
-        <div className="w-[730px] gap-7 flex flex-col">
-          <div className="border-4 h-[500px] border-black rounded-xl">
+        <div className="w-[730px] gap-7 flex flex-col bg-yellow-600 border-black border-4 ">
+          <div className=" h-[500px] rounded-xl ">
             <form 
             onSubmit={handleInsert} className="relative flex flex-row justify-between gap-2 p-5">
-              <div className="top-0 left-0 absolute w-full h-full bg-minecraft-white rounded-xl opacity-80"/>
+              <div className="top-0 left-0 absolute w-full h-full rounded-xl opacity-80"/>
               <div className="z-10 flex flex-col flex-1 justify-between gap-5">
                 <input
                   type="number"
@@ -404,7 +416,7 @@ const BinarySearchTree = () => {
             </form>
             <div 
             className="relative flex flex-col gap-2 p-3">
-            <div className="top-0 left-0 absolute w-full h-full bg-minecraft-white rounded-xl opacity-80"/>
+            <div className="top-0 left-0 absolute w-full h-full rounded-xl opacity-80"/>
               <CustomButton
                 variant="clear"
                 onClick={() => setIsTraversalModalOpen(true)}
@@ -413,7 +425,7 @@ const BinarySearchTree = () => {
                 Choose Traversal
               </CustomButton>
               <div className="z-10 flex flex-col gap-2">
-                <span className="text-sm text-gray-800">
+                <span className="text-xs text-gray-800">
                   {traversalResult || ""}
                 </span>
               </div>
@@ -493,7 +505,7 @@ const BinarySearchTree = () => {
             <Background color="#black" gap={10} variant="lines" lineWidth={0.1} />
             {values.length === 0 && (
             <div className="w-full h-full flex flex-col justify-center items-center">
-              <p className="text-5xl">No values inserted yet...</p>
+              <p className="text-5xl text-center">No values inserted yet...</p>
             </div>
             )}
             {/* <Controls /> */}

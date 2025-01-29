@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 const MinecraftBtn = ({ children, onClick, className }) => {
   // Preload the audio
-  // const clickSound = new Audio("/audio/button-click.mp3");
+  const clickSound = new Audio("/audio/button-click.mp3");
 
   // Wrap the onClick handler to play the sound first
   const handleClick = (e) => {
@@ -25,13 +25,13 @@ const MinecraftBtn = ({ children, onClick, className }) => {
     <button
       onClick={handleClick}
       className={clsx(
-        // 'pixel-corners',
+        'pixel-corners',
         "relative inline-flex items-center justify-center",
-        "text-black",
+        "text-black text-sm",
         "bg-transparent", // para sa background color
         "border-2 border-[#1c1c1c]",
         "rounded-none",
-        "px-6 py-2 text-base",
+        "px-7 py-2 text-base",
         "shadow-lg",
         'rounded-md',
         "hover:bg-red-400",

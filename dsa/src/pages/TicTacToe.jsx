@@ -3,23 +3,32 @@ import { motion } from 'framer-motion';
 import Confetti from 'react-confetti';
 import MinecraftBtn from '../components/MinecraftBtn';
 
-import X from '/images/X.png'
-import O from '/images/O.png'
-
-// Import the SVGs
-import RedApple from '/svg/red-apple.svg';
-import GoldenApple from '/svg/golden-apple.svg';
+import MarioX from '/images/mario-x.png'; // Mario's hat for 'X'
+import LuigiO from '/images/luigi-o.png'; // Luigi's hat for 'O'
+import AnimatedClouds from '../components/AnimatedCloud';
+import MarioRunning from '../components/MarioRunning';
 
 const TicTacToe = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
   const [winner, setWinner] = useState(null);
-  const [winningLine, setWinningLine] = useState([]); // Track the winning line indices
+  const [winningLine, setWinningLine] = useState([]);
 
   const clickSound = new Audio('/audio/button-click.mp3');
 
   useEffect(() => {
     document.title = 'Tic-Tac-Toe';
+  }, []);
+
+  useEffect(() => {
+    const audio = new Audio('/audio/mario.mp3');
+    audio.volume = 0.7
+    audio.loop = true; 
+    audio.play();
+
+    return () => {
+      audio.pause();
+    };
   }, []);
 
   const checkWinner = (board) => {
@@ -36,7 +45,7 @@ const TicTacToe = () => {
     for (let line of lines) {
       const [a, b, c] = line;
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return { winner: board[a], line }; // Return both the winner and the winning line
+        return { winner: board[a], line };
       }
     }
     return null;
@@ -46,10 +55,10 @@ const TicTacToe = () => {
     if (board[index] || winner) return;
 
     const newBoard = [...board];
-    newBoard[index] = isXNext ? 'X' : 'O'; 
+    newBoard[index] = isXNext ? 'X' : 'O';
     setBoard(newBoard);
     setIsXNext(!isXNext);
-    clickSound.currentTime = 0; // Reset playback in case clicked repeatedly
+    clickSound.currentTime = 0;
     clickSound.play().catch((err) => {
       console.log('Audio play failed:', err);
     });
@@ -57,7 +66,7 @@ const TicTacToe = () => {
     const gameResult = checkWinner(newBoard);
     if (gameResult) {
       setWinner(gameResult.winner);
-      setWinningLine(gameResult.line); // Store the winning line indices
+      setWinningLine(gameResult.line);
     }
   };
 
@@ -65,28 +74,29 @@ const TicTacToe = () => {
     setBoard(Array(9).fill(null));
     setIsXNext(true);
     setWinner(null);
-    setWinningLine([]); // Reset the winning line
+    setWinningLine([]);
   };
 
   const renderSquare = (index) => {
-    const isWinningSquare = winningLine.includes(index); // Check if the square is part of the winning line
+    const isWinningSquare = winningLine.includes(index);
 
     return (
       <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         className={`
           flex justify-center items-center 
-          h-20 w-20 cursor-pointer shadow-inner rounded border-2 border-black hover:bg-yello-300
-          ${isWinningSquare ? 'bg-blue-400' : 'bg-transparent'} 
-          ${board[index] ? 'pointer-events-none' : ''}
+          h-20 w-20 cursor-pointer shadow-md rounded-lg border-2 border-yellow-600
+          ${isWinningSquare ? 'bg-red-500' : 'bg-green-300'} 
+          ${board[index] ? 'pointer-events-none' : ''} 
+          transition-all duration-300
         `}
         onClick={() => handleClick(index)}
       >
         {board[index] === 'X' && (
           <motion.img
-            src={X}
-            alt="X"
+            src={MarioX}
+            alt="Mario X"
             className="h-12 w-12"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -94,8 +104,8 @@ const TicTacToe = () => {
         )}
         {board[index] === 'O' && (
           <motion.img
-            src={O}
-            alt="O"
+            src={LuigiO}
+            alt="Luigi O"
             className="h-12 w-12"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -107,39 +117,42 @@ const TicTacToe = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-[#D9D9D9] p-4"
+      className="min-h-screen flex flex-col items-center justify-center bg-blue-400 p-4"
+      style={{ backgroundImage: 'url(/images/1-bg.png)', backgroundSize: 'contain' }}
     >
       {winner && <Confetti />}
 
+      <AnimatedClouds />
+      <MarioRunning y={440} duration={10} />
+      <MarioRunning y={440} duration={40} />
+
+
       {/* Header */}
-      <div className="flex items-center justify-center space-x-4 mb-4">
-        <MinecraftBtn onClick={resetGame} className="w-20 h-10 rounded-xl shadow-md">
-          <span className="">Restart</span>
+      <div className="flex items-center justify-center space-x-4 mb-6">
+        <MinecraftBtn onClick={resetGame} className="w-24 h-12 bg-yellow-400 rounded-xl shadow-lg">
+          <span className="text-white font-semibold">Restart</span>
         </MinecraftBtn>
-        {/* Restart Button */}
         <MinecraftBtn
           onClick={resetGame}
-          className="px-6 py-2 text-black rounded-xl shadow-md transition"
+          className="px-8 py-3 bg-yellow-400 text-white rounded-xl shadow-lg"
         >
           Another Round?
         </MinecraftBtn>
-        {/* <MinecraftBtn onClick={() => window.location.reload()} className="w-10 h-10 rounded shadow-md">
-          <span className="font-minecraftRegular">✕</span>
-        </MinecraftBtn> */}
       </div>
 
       {/* Game Board */}
-      <div className="border-4 border-black rounded-xl p-6">
-        <h2 className="text-2xl text-black text-center mb-4">Tic Tac Toe</h2>
-        <div className="grid grid-cols-3 gap-2">
+      <div className="pixel-corners border-4 border-yellow-600 rounded-xl p-6 bg-white">
+        <h2 className="text-3xl text-black text-center font-bold mb-4">Tic-Tac-Toe</h2>
+        <div className="grid grid-cols-3 gap-4">
           {board.map((_, index) => renderSquare(index))}
         </div>
+
       </div>
 
       {/* Next Move */}
-      <div className="flex items-center mt-6">
-        <div className='text-2xl font-mono text-black'>
-          Next Movie : {isXNext ? 'X' : 'O'}
+      <div className="bg-yellow-600 rounded border-black border-2 p-3 flex items-center mt-6">
+        <div className='text-2xl text-black'>
+          Next Move: {isXNext ? 'Mario (X)' : 'Luigi (O)'}
         </div>
       </div>
     </div>

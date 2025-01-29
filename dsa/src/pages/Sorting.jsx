@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { div } from 'framer-motion/client';
 import CustomButton from '../components/CustomButton';
+import AnimatedClouds from '../components/AnimatedCloud';
 
 const SortingVisualizer = () => {
   const [array, setArray] = useState([]);
@@ -17,6 +18,17 @@ const SortingVisualizer = () => {
     const newArray = Array.from({ length }, () => Math.floor(Math.random() * 100) + 1);
     setArray(newArray);
   };
+
+    useEffect(() => {
+      const audio = new Audio('/audio/mario.mp3');
+      audio.volume = 0.7
+      audio.loop = true; 
+      audio.play();
+  
+      return () => {
+        audio.pause();
+      };
+    }, []);
 
   const handleArrayLengthChange = (e) => {
     const newLength = parseInt(e.target.value);
@@ -321,12 +333,14 @@ const SortingVisualizer = () => {
   ];
 
   return (
-    <div className='flex justify-center bg-[#D9D9D9] '>
+    <div className='flex justify-center bg-[url("/images/5-bg.png")] bg-contain'>
+
+      <AnimatedClouds />
       <div className=" h-screen mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4 text-center font-mono">Sorting Visualizer</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Sorting</h1>
         
-        <div className="flex flex-wrap items-center space-x-4 mb-4">
-          <div className="flex items-center space-x-2">
+        <div className="z-30 flex flex-wrap items-center space-x-4 mb-4">
+          <div className="z-30 flex items-center space-x-2">
             <label htmlFor="arrayLength" className="mr-2">Array Length:</label>
             <input 
               type="number" 
@@ -337,15 +351,6 @@ const SortingVisualizer = () => {
               onChange={handleArrayLengthChange}
               disabled={sorting}
               className="w-20 p-1 border rounded"
-            />
-            <input 
-              type="range" 
-              min="5" 
-              max="18" 
-              value={arrayLength} 
-              onChange={handleArrayLengthChange}
-              disabled={sorting}
-              className="w-40"
             />
           </div>
           
@@ -361,21 +366,12 @@ const SortingVisualizer = () => {
               disabled={sorting}
               className="w-20 p-1 border rounded"
             />
-            <input 
-              type="range" 
-              min="50" 
-              max="2000" 
-              value={animationSpeed} 
-              onChange={handleAnimationSpeedChange}
-              disabled={sorting}
-              className="w-40"
-            />
           </div>
           
           <button 
             onClick={() => generateArray(arrayLength)} 
             disabled={sorting}
-            className="bg-[#D9D9D9] text-black border-2 border-black hover:bg-slate-400 p-2 rounded"
+            className="z-30 bg-yellow-600 text-white border-2 border-black hover:bg-slate-400 p-2 rounded"
           >
             Generate New Array
           </button>
@@ -387,14 +383,14 @@ const SortingVisualizer = () => {
               key={name}
               onClick={algorithm}
               disabled={sorting}
-              className="bg-[#D9D9D9] p-3 text-black hover:bg-slate-300 m-1 rounded"
+              className="bg-yellow-500 p-3 text-white hover:bg-slate-300 m-1 rounded"
             >
               {name}
             </CustomButton>
           ))}
         </div>
 
-        <div className="relative h-64 mx-auto" style={{ width: `${array.length * 64}px` }}>
+        <div className="relative h-52 mx-auto" style={{ width: `${array.length * 64}px` }}>
           <AnimatePresence mode="popLayout">
             {array.map((value, index) => {
               const isInMergingGroup = mergingGroups.some(
@@ -410,13 +406,15 @@ const SortingVisualizer = () => {
                     opacity: 0,
                   }}
                   animate={{ 
-                    scale: 1,
+                    scale: comparing.includes(index) ? 1.1 : 1,
                     opacity: 1,
-                    height: `${value * 2}px`,
+                    y: comparing.includes(index) ? -20 : 0,
+                    // height: `${value * 2}px`,
+                    height: '48px',
                     backgroundColor: 
                       comparing.includes(index) ? '#EF4444' : 
                       isInMergingGroup ? '#8B5CF6' :
-                      (currentMin === index ? '#10B981' : '#D9D9D9'),
+                      (currentMin === index ? '#10B981' : 'green'),
                     border: comparing.includes(index) ? '2px solid black' : '2px solid black',
                     transition: {
                       type: "spring",
@@ -435,7 +433,7 @@ const SortingVisualizer = () => {
                     bottom: 0,
                     width: '48px',
                   }}
-                  className="rounded-lg flex items-center justify-center text-black font-bold"
+                  className="pixel-corners rounded-lg flex items-center justify-center text-white font-bold"
                 >
                   {value}
                 </motion.div>
@@ -446,7 +444,7 @@ const SortingVisualizer = () => {
 
         {currentAlgorithm && (
           <div className="mt-4 text-center">
-            <p className="text-lg">Current Algorithm: {currentAlgorithm}</p>
+            <p className="text-lg text-white">Current Algorithm: {currentAlgorithm}</p>
           </div>
         )}
       </div>

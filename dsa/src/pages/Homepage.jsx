@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import MinecraftBtn from "../components/MinecraftBtn";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
+import AnimatedClouds from "../components/AnimatedCloud";
+import { useNavigate } from "react-router-dom";
+import MarioRiding from "../components/MarioRiding";
 
 function Homepage() {
+  const navigate = useNavigate();
   // Ref for the <audio> element
   const audioRef = useRef(null);
 
@@ -30,90 +33,37 @@ function Homepage() {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
-      {/* Audio element (no autoPlay) */}
-      <audio ref={audioRef} src="/audio/minecraft-bg-music.mp3" loop />
+    <div className="min-h-screen bg-blue-400 flex flex-col justify-center items-center bg-contain bg-[url('/images/5-bg.png')]">
+      <audio ref={audioRef} src="/audio/mario.mp3" />
+      <AnimatedClouds />
+      <MarioRiding y={400} />
+      {/* Title */}
+      <div className="z-10 text-center text-white mt-16">
+        <h1 className="text-stroke text-5xl text-gray-300 font-pressStart text-shadow-md">DSA CASE STUDY</h1>
+      </div>
 
-      {/* This is our main container with the background */}
-      <div
-        className="
-          relative
-          h-full w-full
-          bg-[url('/images/home-bg.png')]
-          bg-no-repeat
-          bg-cover
-          md:bg-[length:150%]
-          lg:bg-[length:150%]
-          animate-panBackground
-          flex flex-col items-center
-        "
-      >
-        {/* Sound Icon Button (Top-Right) */}
+      {/* Buttons */}
+      <div className="z-10 flex gap-8 mt-12">
+        <MinecraftBtn onClick={() => navigate('/case1')} className="px-8 py-3 text-2xl font-bold text-white bg-orange-500 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:bg-orange-600">
+          Play
+        </MinecraftBtn>
+      </div>
+
+      <div>
         <button
           onClick={handleSoundToggle}
-          className="
-            absolute top-4 right-4
-            p-2
-            bg-gray-700
-            rounded
-            text-white
-            font-bold
-            hover:bg-gray-600
-            transition
-          "
-          style={{ textShadow: "1px 1px 0 #000" }}
+          className="fixed bottom-4 right-4 p-2 bg-yellow-500 text-white rounded-full shadow-lg"
         >
-          {/* If using React Icons: isPlaying ? <FaVolumeMute /> : <FaVolumeUp /> */}
-          {isPlaying ? <FaVolumeUp/> : <FaVolumeMute/>}
+          {isPlaying ?  <FaVolumeUp size={24} /> : <FaVolumeMute size={24} />}
         </button>
+      </div>
 
-        {/* Title Section */}
-        <div className="absolute top-14 lg:left-1/2 lg:transform lg:-translate-x-1/2 text-center">
-          <div className="relative inline-block">
-            <img
-              src="/svg/home-title.svg"
-              className="w-[700px]"
-              alt="DSA Project"
-            />
-
-            {/* Animate the yellow text using Framer Motion */}
-            <motion.span
-              className="
-                absolute
-                bottom-4 right-10
-                text-yellow-300
-                font-minecraftBold
-                text-xs
-                lg:text-xl
-                tracking-wide
-              "
-              initial={{ rotate: 0, scale: 1 }}
-              animate={{
-                rotate: [0, 5, -5, 0],
-                scale: [1, 1.1, 1, 1.1, 1],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              Bruh
-            </motion.span>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-5 w-80">
-          <MinecraftBtn className="w-full">Play</MinecraftBtn>
-          <MinecraftBtn className="w-full">About</MinecraftBtn>
-        </div>
-
-        {/* Footer text */}
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <p className="font-minecraftItalic text-lg text-white">
-            BSCPE 2-4 &nbsp;|&nbsp; Group 12
-          </p>
+      <div className="flex flex-col justify-center items-center text-white mt-6">
+        <div>Group 13</div>
+        <div className="z-30 flex flex-col text-center mt-4">
+          <span>Atienza, Angel G.</span>
+          <span>Chavez, Trisha Mae A.</span>
+          <span>Marquez, Leslie Nicole L.</span>
         </div>
       </div>
     </div>

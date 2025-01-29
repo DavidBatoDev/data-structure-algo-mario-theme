@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCar } from "react-icons/fa";
 import CustomButton from "../components/CustomButton";
+import AnimatedClouds from "../components/AnimatedCloud";
 
 const Queue = () => {
   const [garage, setGarage] = useState([]);
@@ -14,6 +15,17 @@ const Queue = () => {
 
   useEffect(() => {
     document.title = "Queue";
+  }, []);
+
+  useEffect(() => {
+    const audio = new Audio('/audio/mario.mp3');
+    audio.volume = 0.7
+    audio.loop = true; 
+    audio.play();
+
+    return () => {
+      audio.pause();
+    };
   }, []);
 
   useEffect(() => {
@@ -98,24 +110,25 @@ const Queue = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#D9D9D9] p-10 text-gray-800 relative">
-      <h1 className="text-4xl font-mono mb-6 text-center">PUP-CEA Parking Garage</h1>
+    <div className="bg-[url('/images/2-bg.jpg')] bg-contain min-h-screen bg-[#D9D9D9] p-10 text-gray-800 relative">
+      <h1 className="text-4xl font-pressStart mb-6 text-center">PUP-CEA Parking Garage</h1>
 
+      <AnimatedClouds />
       {/* Notification (Animated Slide-In) */}
       {notification && (
         <motion.div
           initial={{ x: -300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -300, opacity: 0 }}
-          className="fixed top-4 right-4 bg-green-500 text-white py-2 px-8 rounded shadow-lg z-50"
+          className="fixed border-4 border-black top-4 right-4 font-pressStart bg-yellow-500 text-white py-2 px-8 rounded shadow-lg z-50"
         >
           {notification}
         </motion.div>
       )}
 
       {/* Form Section */}
-      <div className="flex justify-center mb-8 relative">
-        <div className="text-black p-6 rounded-lg shadow-lg border-4 border-black w-[1300px] max-w-7xl min-h-64">
+      <div className="flex justify-center relative">
+        <div className="text-black p-6 rounded-lg w-[1300px] max-w-7xl min-h-64">
           <h2 className="text-2xl font-bold mb-4 text-center">Car Arrival/Departure</h2>
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -126,10 +139,10 @@ const Queue = () => {
               value={plateNumber}
               onChange={(e) => setPlateNumber(e.target.value)}
               placeholder="Enter Plate Number"
-              className="p-2 rounded border border-black text-black border-dark bg-transparent w-full md:w-auto"
+              className="p-2 bg-red-600 pixel-corners rounded border border-black text-black border-dark bg-transparent w-full md:w-auto"
             />
             <CustomButton
-              variant="arrival"
+              variant="departLastCar"
               size="md"
               onClick={handleArrival}
               className="flex items-center justify-center gap-2"
@@ -138,7 +151,7 @@ const Queue = () => {
               <span>Arrival</span>
             </CustomButton>
             <CustomButton
-              variant="departure"
+              variant="departLastCar"
               size="md"
               className="flex items-center justify-center gap-2"
               onClick={() => departCar(plateNumber)}
@@ -178,8 +191,8 @@ const Queue = () => {
       </div>
 
       {/* Garage Section */}
-      <div className="h-48 p-4 rounded-lg shadow-lg border-4 border-black w-full max-w-7xl mx-auto flex justify-center items-center overflow-x-auto space-x-4">
-        <div className="overflow-hidden flex gap justify-start items-center w-full mx-auto">
+      <div className="p-4 rounded-lg w-full max-w-7xl mx-auto flex justify-center items-center overflow-x-auto">
+        <div className="overflow-hidden flex gap justify-start items-center w-full gap-3">
           <AnimatePresence>
             {garage.map((car, index) => {
               // Is this car the front or rear of the queue?
@@ -189,19 +202,22 @@ const Queue = () => {
               // If there's only one car, it's both front and rear
               // You could add special styling if isFront && isRear
               // For simplicity, we'll show both labels if there's only 1 car.
-              let carImage = "";
+              let borderClass = "";
               if (isFront && isRear) {
                 // Both front and rear
-                carImage = '/images/car-front.png'
-                // borderClass = "border-4 border-primary"; 
+                borderClass = "border-4 border-red-500"; 
               } else if (highlightedCar === car) {
-                carImage = '/images/car-me.png'
+                // Highlighted car
+                borderClass = "border-4 border-yellow-500";
               } else if (isFront) {
-                carImage = '/images/car-front.png'
+                // Front car
+                borderClass = "border-4 border-green-500";
               } else if (isRear) {
-                carImage = '/images/car-rear.png';
+                // Rear car
+                borderClass = "border-4 border-blue-500";
               } else {
-                carImage = '/images/car.png';
+                // Middle cars
+                borderClass = "border-2 border-gray-400";
               }
 
               return (
@@ -223,8 +239,13 @@ const Queue = () => {
                   className={`relative text-gray-800 rounded-lg flex items-center justify-between flex-col min-w-[100px]`}
                 >
                   {/* Car icon and plate number */}
-                  <img src={carImage} style={{objectFit: "cover"}} className="w-[120px] h-36 mb-[-40px]" />
-                  <span className="text-sm font-bold">PN: {car}</span>
+                  <img src={'/images/mario-cart-pixel.png'} style={{objectFit: "contain"}} className="w-[100px] h-36 mb-[-40px]" />
+                  <span className="text-sm bg-yellow-600 min-w-20 p-2 pixel-corners text-white font-bold">{car}</span>
+                  <div className="absolute top-0 right-0 bg-black text-white text-xs rounded-bl-lg rounded-tr-lg">
+                    {isFront && !isRear && "Front"}
+                    {isRear && !isFront && "Rear"}
+                    {isFront && isRear && "Only Car"}
+                  </div>
                 </motion.div>
               );
             })}
@@ -234,8 +255,8 @@ const Queue = () => {
           {garage.length === 0 && (
             <div className="w-full flex items-center justify-center">
               <div className="flex gap-5 items-center space-y-4">
-                <img src="/images/car.png"  className='w-32' alt="" />
-                <p className="text-2xl font-bold text-black">Garage is Empty</p>
+                <img src="/images/mario-cart.png"  className='w-32' alt="" />
+                <p className="text-2xl font-bold text-black">Garage is Empty...</p>
               </div>
             </div>
           )}

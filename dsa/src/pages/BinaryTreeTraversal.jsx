@@ -12,6 +12,7 @@ import AnimatedNode from "../components/AnimatedNode";
 import SolidBrownEdges from "../components/SolidBrownEdges";
 import CustomButtom from "../components/CustomButton";
 import MinecraftBtn from "../components/MinecraftBtn";
+import MarioRunning from "../components/MarioRunning";
 
 // Define nodeTypes outside the component to prevent React Flow warning
 // const nodeTypes = {
@@ -53,13 +54,24 @@ const BinaryTreeTraversal = () => {
   //   }
   // }, [nodes, reactFlowInstance]);
 
+  useEffect(() => {
+    const audio = new Audio('/audio/mario.mp3');
+    audio.volume = 0.7
+    audio.loop = true; 
+    audio.play();
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
   const unhiglightNodes = () => {
     setNodes((prev) =>
       prev.map((node) => ({
         ...node,
         style: {
           ...node.style,
-          background: "transparent", // Reset background
+          background: "white", // Reset background
           color: "black", // Reset text color
         },
       }))
@@ -121,8 +133,6 @@ const BinaryTreeTraversal = () => {
         style: {
           width: 100,
           height: 100,
-          borderRadius: 50,
-          border: "4px solid black",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -139,7 +149,7 @@ const BinaryTreeTraversal = () => {
           target: nodeId,
           // type: "smoothstep",
           // type: "straight",
-          style: { strokeWidth: 4, stroke: "black" },
+          style: { strokeWidth: 4, stroke: "white" },
           strokeLinecap: "butt",
         });
       }
@@ -297,7 +307,7 @@ const BinaryTreeTraversal = () => {
     // Reset all node styles to default without unnecessary updates
     setNodes((prev) =>
       prev.map((node) => {
-        const defaultStyle = { background: "transparent", color: "black" };
+        const defaultStyle = { background: "white", color: "black" };
         const currentStyle = node.style || {};
         const needsUpdate =
           currentStyle.background !== defaultStyle.background ||
@@ -354,7 +364,7 @@ const BinaryTreeTraversal = () => {
               style: {
                 ...node.style,
                 background: "#FFDE00", // Default color
-                color: "black",
+                color: "white",
               },
             };
           } else if (node.id === currentNodeId) {
@@ -364,7 +374,7 @@ const BinaryTreeTraversal = () => {
               style: {
                 ...node.style,
                 background: "#FFDE00", // Highlight color
-                color: "black",
+                color: "white",
               },
             };
           }
@@ -435,6 +445,7 @@ const BinaryTreeTraversal = () => {
         }}
         className="w-full h-screen relative  "
       >
+              <MarioRunning className='z-[999999]' y={0} duration={40} />
         {/* Modal for Levels */}
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-30">
@@ -452,14 +463,14 @@ const BinaryTreeTraversal = () => {
               />
               <div className="flex justify-center space-x-4">
                 <CustomButtom
-                  variant="clear"
+                  variant="departLastCar"
                   onClick={handleGenerate}
                   className="text-dark px-4 py-2 rounded shadow-md transition"
                 >
                   Generate Tree
                 </CustomButtom>
                 <CustomButtom
-                  variant="clear"
+                  variant="departLastCar"
                   onClick={() => setIsModalOpen(false)}
                   className="text-dark px-4 py-2 rounded shadow-md hover:bg-red-400 transition"
                 >
@@ -479,21 +490,21 @@ const BinaryTreeTraversal = () => {
                 </h2>
                 <div className="flex flex-col space-y-4">
                   <CustomButtom
-                    variant="clear"
+                    variant="departLastCar"
                     onClick={() => handleTraversalSelect("Preorder")}
                     className="bg-primary text-dark px-4 py-2 rounded shadow-md hover:bg-primary-light transition"
                   >
                     Preorder (TLR)
                   </CustomButtom>
                   <CustomButtom
-                    variant="clear"
+                    variant="departLastCar"
                     onClick={() => handleTraversalSelect("Inorder")}
                     className="bg-primary text-dark px-4 py-2 rounded shadow-md hover:bg-primary-light transition"
                   >
                     Inorder (LTR)
                   </CustomButtom>
                   <CustomButtom
-                    variant="clear"
+                    variant="departLastCar"
                     onClick={() => handleTraversalSelect("Postorder")}
                     className="text-dark px-4 py-2 rounded shadow-md hover:bg-primary-light transition"
                   >
@@ -539,7 +550,8 @@ const BinaryTreeTraversal = () => {
         >
           <Background
             color="black"
-            gap={16}
+            className="bg-[url(/images/3-bg.png)] bg-contain"
+            gap={1000000}
             variant="dots"
             // variant="lines"
             style={{ shapeRendering: "crispEdges" }}
@@ -547,8 +559,8 @@ const BinaryTreeTraversal = () => {
           <div className="absolute z-10 top-10 right-4">
             <MinecraftBtn
               onClick={() => handleChooseTraversal()}
-              variant="generateTree"
-              className="text-dark px-4 py-2 rounded shadow-md cursor-pointer transition z-30"
+              variant="departLastCar"
+              className="bg-yellow-600 hover:bg-yellow-300 text-white px-4 py-2 rounded shadow-md cursor-pointer transition z-30"
             >
               Choose Traversal
             </MinecraftBtn>
@@ -560,7 +572,7 @@ const BinaryTreeTraversal = () => {
                 <MinecraftBtn
                   variant="gray"
                   onClick={() => setIsModalOpen(true)}
-                  className="text-dark px-4 py-2 rounded shadow-md hover:bg-primary-light transition"
+                  className="text-white bg-yellow-600 px-4 py-2 rounded shadow-md hover:bg-yellow-300 transition"
                 >
                   Edit Levels
                 </MinecraftBtn>
@@ -573,7 +585,7 @@ const BinaryTreeTraversal = () => {
                 <MinecraftBtn
                   variant="arrival"
                   onClick={() => skipTraversal()}
-                  className="bg-primary text-dark px-4 py-2 rounded shadow-md hover:bg-primary-light transition"
+                  className="bg-yellow-600 text-white px-4 py-2 rounded shadow-md hover:bg-yellow-300 transition"
                 >
                   Skip Traversal
                 </MinecraftBtn>

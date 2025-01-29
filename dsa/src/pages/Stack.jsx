@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaCar } from 'react-icons/fa';
 import CustomButton from '../components/CustomButton';
+import { GiMushroom } from 'react-icons/gi'; // Mario Mushroom Icon
+import { FaMoneyBill } from 'react-icons/fa'; // Money icon for depart action
+import AnimatedClouds from '../components/AnimatedCloud';
 
 const Stack = () => {
   const [garage, setGarage] = useState([]);
@@ -11,11 +14,22 @@ const Stack = () => {
   const [message, setMessage] = useState(null);
   const [notification, setNotification] = useState(null);
   const [departingCar, setDepartingCar] = useState(null);
-  const [isDeparting, setIsDeparting] = useState(false); 
+  const [isDeparting, setIsDeparting] = useState(false);
 
   useEffect(() => {
-    document.title = "Stack";
+    document.title = "Mario Stack Parking Garage";
   }, []);
+
+    useEffect(() => {
+      const audio = new Audio('/audio/mario.mp3');
+      audio.volume = 0.7
+      audio.loop = true; 
+      audio.play();
+  
+      return () => {
+        audio.pause();
+      };
+    }, []);
 
   const showMessage = (msg) => {
     setMessage(msg);
@@ -28,13 +42,13 @@ const Stack = () => {
   };
 
   const departLastCar = () => {
-    if (isDeparting) return; // Prevent spamming
+    if (isDeparting) return;
     if (garage.length === 0) {
       showMessage('Garage is empty!');
       return;
     }
 
-    setIsDeparting(true); // Set departure state
+    setIsDeparting(true);
     const lastCar = garage[garage.length - 1];
     setDepartingCar(lastCar);
 
@@ -42,9 +56,9 @@ const Stack = () => {
       setGarage(garage.slice(0, -1));
       setDepartures(departures + 1);
       setDepartingCar(null);
-      setIsDeparting(false); // Reset departure state
+      setIsDeparting(false);
       showNotification(`Car ${lastCar} departed!`);
-    }, 1000); // Match this timeout to the animation duration
+    }, 1000);
   };
 
   const handleArrival = () => {
@@ -83,18 +97,19 @@ const Stack = () => {
       showMessage('Car must be at the top of the stack to depart!');
       return;
     }
-    departLastCar(); // Use the same logic as departLastCar
+    departLastCar();
     setPlateNumber('');
   };
 
   return (
-    <div className="min-h-screen bg-[#D9D9D9] p-6 text-gray-800 relative
-    ">
+    <div className="min-h-screen bg-[url('/images/2-bg.jpg')] bg-contain py-3 px-4 text-white relative">
       <div className='flex justify-center items-center gap-2'>
-        <div className='p-2 rounded-lg border-4 border-black mb-3'>
-          <h1 className="text-4xl text-center font-mono text-black">STACK PUP CEA PARKING GARAGE</h1>
+        <div className='p-2 rounded-lg border-4 border-yellow-400 mb-3'>
+          <h1 className="text-4xl text-center font-pressStart text-yellow-500">MARIO STACK PARKING GARAGE</h1>
         </div>
       </div>
+
+      <AnimatedClouds />
 
       {/* Notification */}
       {notification && (
@@ -102,7 +117,7 @@ const Stack = () => {
           initial={{ x: -300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -300, opacity: 0 }}
-          className="fixed top-4 right-4 text-black border-2 border-black py-2 px-8 rounded z-50"
+          className="fixed top-4 right-4 text-white bg-blue-500 border-2 border-yellow-500 py-2 px-8 rounded z-50"
         >
           {notification}
         </motion.div>
@@ -110,92 +125,93 @@ const Stack = () => {
 
       <div className="flex gap-5">
         {/* Form Section */}
-        <div className='w-[40%] h-[500px] bg-[#D9D9D9] flex flex-col justify-center items-center p-6 rounded-lg border-4 border-black shadow'>
-            <h2 className="text-2xl font-bold mb-1 text-center">Car Arrival/Departure</h2>
-            <div className="mt-2 flex gap-10">
-              <p className="text-lg text-center">Total Arrivals: {arrivals}</p>
-              <p className="text-lg text-center">Total Departures: {departures}</p>
-            </div>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex flex-col space-y-2"
-            >
-              <label className="text-lg text-center">Car Plate Number:</label>
-              <input
-                type="text"
-                value={plateNumber}
-                onChange={(e) => setPlateNumber(e.target.value)}
-                placeholder="Enter Plate Number"
-                className="p-2 rounded border border-black bg-[#FFF] text-center"
-              />
-              <div className='flex justify-center items-center gap-2'>
-                <CustomButton
-                  variant="clear"
-                  icon={() => <FaCar className="text-xl" />}
-                  onClick={handleArrival}
-                >
-                  Arrival
-                </CustomButton>
-                <CustomButton
-                  variant="clear"
-                  icon={() => <FaCar className="text-xl" />}
-                  onClick={handleDeparture}
-                >
-                  Departure
-                </CustomButton>
-                <CustomButton
-                  variant="clear"
-                  icon={() => <FaCar className="text-xl" />}
-                  onClick={departLastCar}
-                >
-                  Depart
-                </CustomButton>
-
-              </div>
-            </form>
-            {message && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute bottom-20 border-2 border-red-400 text-red-700 p-3 rounded"
+        <div className="z-10 w-full md:w-[40%] h-[470px] bg-red-600 flex flex-col justify-center items-center p-6 rounded-lg border-4 border-yellow-500 shadow-lg">
+          <h2 className="text-2xl font-bold mb-1 text-center text-white">Car Arrival/Departure</h2>
+          <div className="mt-2 flex gap-10 text-white">
+            <p className="text-lg text-center">Total Arrivals: {arrivals}</p>
+            <p className="text-lg text-center">Total Departures: {departures}</p>
+          </div>
+          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-4 w-full max-w-xs mx-auto">
+            <label className="text-lg text-center text-white">Car Plate Number:</label>
+            <input
+              type="text"
+              value={plateNumber}
+              onChange={(e) => setPlateNumber(e.target.value)}
+              placeholder="Enter Plate Number"
+              className="p-3 rounded border-2 border-yellow-600 bg-white text-center font-mono text-gray-800 w-full"
+            />
+            <div className="flex gap-4 w-full justify-center items-center">
+              <CustomButton
+                variant="departLastCar"
+                className={'w-[140px] text-xs'}
+                icon={() => <FaMoneyBill className="text-2xl text-red-400" />}
+                onClick={handleArrival}
               >
-                {message}
-              </motion.div>
-            )}
+                Arrival
+              </CustomButton>
+              <CustomButton
+                className={'w-[140px] text-xs'}
 
+                variant="departLastCar"
+                icon={() => <FaMoneyBill className="text-2xl text-red-400" />}
+                onClick={handleDeparture}
+              >
+                Departure
+              </CustomButton>
+              <CustomButton
+                variant="departLastCar"
+                icon={() => <FaMoneyBill className="text-2xl text-red-400" />}
+                onClick={departLastCar}
+                className={'w-[140px] text-xs'}
+
+
+              >
+                Depart
+              </CustomButton>
+            </div>
+          </form>
+          {message && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute bottom-10 border-2 border-yellow-400 text-yellow-400 p-2 text-[9px] rounded"
+            >
+              {message}
+            </motion.div>
+          )}
         </div>
 
         {/* Garage Section */}
-        <div className="w-[60%] border-black rounded-lg border-4 flex justify-center items-center">
-          <div className="p-3 gap-1 rounded-lg shadow-lg border border-gray-200 w-full h-[500px] flex flex-col-reverse items-center overflow-hidden">
+        <div className="z-10 w-full md:w-[60%] border-yellow-500 rounded-lg border-4 flex justify-center items-center">
+          <div className="p-3 bg-white opacity-90 gap-1 rounded-lg shadow-lg border border-gray-200 w-full h-[470px] flex flex-col-reverse items-center overflow-hidden">
             {garage.map((car, index) => (
               <motion.div
                 key={index}
                 initial={{ y: -50, opacity: 0 }}
                 animate={
                   departingCar === car
-                    ? { x: 300, opacity: 0 } // Animate departure
+                    ? { x: 300, opacity: 0 }
                     : { y: 0, opacity: 1 }
                 }
                 transition={{ type: 'tween', stiffness: 100, duration: 0.5 }}
-                className="border border-black text-gray-800 p-[10px] text-sm rounded-lg w-[100%] flex items-center justify-between shadow-md"
+                className="bg-yellow-600 border border-black text-gray-800 p-[10px] text-sm rounded-lg w-[100%] flex items-center justify-between shadow-md"
               >
                 <span>Plate Number: {car}</span>
-                <FaCar className="text-xl text-black" />
+                <img src="/images/mario-cart.png" className='w-5 h-5 bg-cover' alt="" />
               </motion.div>
             ))}
             {garage.length === 0 && (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="flex justify-center flex-col items-center space-y-4">
-                  <FaCar className="text-6xl text-black" />
-                  <p className="text-2xl font-bold text-black">Garage is Empty</p>
+                  {/* <GiMushroom className="text-6xl text-red-600" /> */}
+                  <img src="/images/mario-cart.png" className='w-36 h-36' alt="" />
+                  <p className="text-2xl font-bold text-yellow-500">Garage is Empty</p>
                 </div>
               </div>
             )}
           </div>
         </div>
-
       </div>
     </div>
   );
