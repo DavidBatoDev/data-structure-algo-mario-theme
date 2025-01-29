@@ -13,6 +13,7 @@ const TicTacToe = () => {
   const [isXNext, setIsXNext] = useState(true);
   const [winner, setWinner] = useState(null);
   const [winningLine, setWinningLine] = useState([]);
+  const [isDraw, setIsDraw] = useState(false);
 
   const clickSound = new Audio('/audio/button-click.mp3');
 
@@ -48,6 +49,9 @@ const TicTacToe = () => {
         return { winner: board[a], line };
       }
     }
+    if (board.every(cell => cell)) {
+      return { winner: null, line: [], isDraw: true };
+    }
     return null;
   };
 
@@ -67,6 +71,7 @@ const TicTacToe = () => {
     if (gameResult) {
       setWinner(gameResult.winner);
       setWinningLine(gameResult.line);
+      setIsDraw(gameResult.isDraw || false);
     }
   };
 
@@ -75,6 +80,7 @@ const TicTacToe = () => {
     setIsXNext(true);
     setWinner(null);
     setWinningLine([]);
+    setIsDraw(false);
   };
 
   const renderSquare = (index) => {
@@ -126,6 +132,16 @@ const TicTacToe = () => {
       <MarioRunning y={440} duration={10} />
       <MarioRunning y={440} duration={40} />
 
+      {/* Game Result */}
+      <div className="fixed top-4 right-4 bg-yellow-600 text-white p-4 rounded-lg shadow-lg">
+        {winner ? (
+          <div>
+            Winner: {winner === 'X' ? 'Mario (X)' : 'Luigi (O)'}
+          </div>
+        ) : isDraw ? (
+          <div>It's a Draw!</div>
+        ) : null}
+      </div>
 
       {/* Header */}
       <div className="flex items-center justify-center space-x-4 mb-6">
@@ -146,7 +162,6 @@ const TicTacToe = () => {
         <div className="grid grid-cols-3 gap-4">
           {board.map((_, index) => renderSquare(index))}
         </div>
-
       </div>
 
       {/* Next Move */}
