@@ -126,7 +126,7 @@ const TicTacToe = () => {
       className="min-h-screen flex flex-col items-center justify-center bg-blue-400 p-4"
       style={{ backgroundImage: 'url(/images/1-bg.png)', backgroundSize: 'contain' }}
     >
-      {winner && <Confetti />}
+      {/* {winner && <Confetti />} */}
 
       <AnimatedClouds />
       <MarioRunning y={440} duration={10} />
