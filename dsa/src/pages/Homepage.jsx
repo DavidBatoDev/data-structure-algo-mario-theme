@@ -44,7 +44,7 @@ function Homepage() {
 
       {/* Buttons */}
       <div className="z-10 flex gap-8 mt-12">
-        <MinecraftBtn onClick={() => navigate('/case1')} className="px-8 py-3 text-2xl font-bold text-white bg-orange-500 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:bg-orange-600">
+        <MinecraftBtn onClick={() => navigate('/case1')} className="px-8 py-3 text-2xl font-bold text-white bg-yellow-600 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:bg-orange-600">
           Play
         </MinecraftBtn>
       </div>
