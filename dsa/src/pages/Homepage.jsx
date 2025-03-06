@@ -57,15 +57,6 @@ function Homepage() {
           {isPlaying ?  <FaVolumeUp size={24} /> : <FaVolumeMute size={24} />}
         </button>
       </div>
-
-      <div className="flex flex-col justify-center items-center text-white mt-6">
-        <div>Group 13</div>
-        <div className="z-30 flex flex-col text-center mt-4">
-          <span>Atienza, Angel G.</span>
-          <span>Chavez, Trisha Mae A.</span>
-          <span>Marquez, Leslie Nicole L.</span>
-        </div>
-      </div>
     </div>
   );
 }
